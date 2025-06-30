@@ -179,7 +179,7 @@ export const refreshAccessToken = asyncHandler( async (req, res) => {
         .json( new ApiResponse(
             200, 
             { accessToken, newRefreshToken}, 
-            "Axxxess token refreshed successfully"
+            "Access token refreshed successfully"
         ))
     } catch (error) {
         throw new ApiError(401, "Invalid refresh token");
