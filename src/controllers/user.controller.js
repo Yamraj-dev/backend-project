@@ -5,7 +5,7 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 import ApiResponse from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken";
 
-const genrateAccessAndRefereshTokens = async (userId) => {
+const generateAccessAndRefereshTokens = async (userId) => {
     try {
         const user = await User.findById(userId);
         const asccessToken = user.genrateAccessToken();
@@ -171,7 +171,7 @@ export const refreshAccessToken = asyncHandler( async (req, res) => {
             secure: true
         }
     
-        const {accessToken, newRefreshToken} = await genrateAccessAndRefereshTokens(user._id);
+        const {accessToken, newRefreshToken} = await generateAccessAndRefereshTokens(user._id);
     
         return res.status(200)
         .cookie("accessToken", accessToken, options)
