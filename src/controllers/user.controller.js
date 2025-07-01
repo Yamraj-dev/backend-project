@@ -218,7 +218,7 @@ export const getCurrentUser = asyncHandler(async (req, res) => {
 export const updateUserNamme = asyncHandler(async (req, res) => {
     const { username } = req.body;
 
-    const user = User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
         req.user?._id,
         { $set: { username } },
         { new: true })
