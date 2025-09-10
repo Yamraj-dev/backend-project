@@ -39,7 +39,27 @@ export const toggleSubscription = asyncHandler(async (req, res) => {
 export const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     const { id: channelId } = req.params;
 
-    const channel = await Subscription.findById(channelId);
+    const subscribers = await Subscription.find({ channel: channelId })
+        .populate("subscriber", "username avatar");
 
-    
+    res.status(200)
+        .json(
+        new ApiResponse(
+            200,
+            subscribers.map(sub => sub.subscriber),
+            "Fetched subscribers of this channel"
+        )
+    );
+
+});
+
+export const getSubscribedChannels = asyncHandler(async (req, res) => {
+    const { id: subscriberId } = req.params;
+
+    const channels = await Subscription.find({ subscriber: subscriberId }).populate("channel", "username avatar");
+
+    res.status(200).json(new ApiResponse(200,
+        channels.map(cha => cha.channel),
+        "Fetched subscribed channel of this channel"
+    ))
 })
