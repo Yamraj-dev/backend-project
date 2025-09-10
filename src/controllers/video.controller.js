@@ -48,6 +48,8 @@ export const uploadVideo = asyncHandler(async (req, res) => {
 export const updateVideo = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { title, description } = req.body;
+    const videoFileLocalPath = req.files.videoFile[0]?.path;
+    const thumbnailLocalPath = req.files.thumbnail[0]?.path;
 
     const video = await Video.findById(id);
 
@@ -55,6 +57,16 @@ export const updateVideo = asyncHandler(async (req, res) => {
 
     if (video.owner.toString() !== req.user._id.toString()) throw new ApiError(403, "Your are not allowed to update this video");
 
+    if (videoFileLocalPath) {
+        await deleteFromCloudinary(video.videoFile, "video");
+        const uploadedVideo = await uploadOnCloudinary(videoFileLocalPath);
+        video.videoFile = uploadedVideo.url;
+    }
+    if (thumbnailLocalPath) {
+        await deleteFromCloudinary(video.thumbnailImg, "image")
+        const updateImg = await uploadOnCloudinary(thumbnailLocalPath);
+        video.thumbnailImg = updateImg.url;
+    }
     if (title) video.title = title;
     if (description) video.description = description;
 
@@ -72,6 +84,9 @@ export const deleteVideo = asyncHandler(async (req, res) => {
     if (!video) throw new ApiError(404, "Video not found");
 
     if (video.owner.toString() !== req.user._id.toString()) throw new ApiError(403, "Your are not allowed to delete this video");
+
+    await deleteFromCloudinary(video.thumbnailImg, "image");
+    await deleteFromCloudinary(video.videoFile, "video");
 
     await Video.deleteOne(video._id)
 
