@@ -4,6 +4,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
+import deleteFromCloudinary from "../utils/oldImageDelete.js";
 
 export const uploadVideo = asyncHandler(async (req, res) => {
 
@@ -17,7 +18,7 @@ export const uploadVideo = asyncHandler(async (req, res) => {
         throw new ApiError(400, "description is required !");
     }
     const videoFileLocalPath = req.files.videoFile[0]?.path;
-    const thumbnailLocalPath = req.files.thumbnail[0]?.path;
+    const thumbnailLocalPath = req.files.thumbnailImg[0]?.path;
 
     if (!videoFileLocalPath) {
         throw new ApiError(400, "Video file is required !");
@@ -48,8 +49,8 @@ export const uploadVideo = asyncHandler(async (req, res) => {
 export const updateVideo = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const { title, description } = req.body;
-    const videoFileLocalPath = req.files.videoFile[0]?.path;
-    const thumbnailLocalPath = req.files.thumbnail[0]?.path;
+    const videoFileLocalPath = req.files?.videoFile[0]?.path;
+    const thumbnailLocalPath = req.files?.thumbnailImg[0]?.path;
 
     const video = await Video.findById(id);
 
@@ -95,7 +96,7 @@ export const deleteVideo = asyncHandler(async (req, res) => {
 })
 
 export const getVideoById = asyncHandler(async (req, res) => {
-    const { videoId } = req.params;
+    const { id: videoId } = req.params;
     const userId = req.user._id;
 
     const video = await Video.findById(videoId).populate("owner", "username avatar");
@@ -144,7 +145,7 @@ export const getAllVideos = asyncHandler(async (req, res) => {
 
 export const getUserVideos = asyncHandler(async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
-    const { channelId } = req.params;
+    const { id: channelId } = req.params;
 
     const channelVideos = await Video
         .find({ owner: channelId })
@@ -153,7 +154,7 @@ export const getUserVideos = asyncHandler(async (req, res) => {
         .limit(Number(limit))
         .sort({ createdAt: -1 });
     
-    if (!channelOwner) throw new ApiError(404, "Channel not found");
+    if (!channelVideos) throw new ApiError(404, "Channel not found");
 
     const Total = await Video.countDocuments({ owner: channelId });
 
