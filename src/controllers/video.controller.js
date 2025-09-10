@@ -154,7 +154,7 @@ export const getUserVideos = asyncHandler(async (req, res) => {
         .limit(Number(limit))
         .sort({ createdAt: -1 });
     
-    if (!channelVideos) throw new ApiError(404, "Channel not found");
+    if (!channelVideos.length) throw new ApiError(404, "No videos found for this channel");
 
     const Total = await Video.countDocuments({ owner: channelId });
 
