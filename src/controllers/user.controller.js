@@ -211,7 +211,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-export const changeCuurentPassword = asyncHandler(async (req, res) => {
+export const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
 
   const user = await User.findById(req.user?._id);
@@ -237,7 +237,7 @@ export const getCurrentUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, req.user, "current user fetched successfully"));
 });
 
-export const updateUserNamme = asyncHandler(async (req, res) => {
+export const updateUserName = asyncHandler(async (req, res) => {
   const { username } = req.body;
 
   const user = await User.findByIdAndUpdate(
