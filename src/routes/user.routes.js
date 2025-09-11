@@ -38,7 +38,7 @@ router.post("/login", logedInUser);
 router.post("/logout", verifyJwt, logOutUser);
 router.post("/refresh-token", verifyJwt, refreshAccessToken);
 router.post("/watch-history", verifyJwt, getWatchHistory);
-router.post("/UserChannelProfile", verifyJwt, getUserChannelProfile);
+router.post("/UserChannelProfile/:id", verifyJwt, getUserChannelProfile);
 
 router.get("/current-user", verifyJwt, getCurrentUser);
 

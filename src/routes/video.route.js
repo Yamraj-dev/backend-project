@@ -16,6 +16,10 @@ router.post("/upload", upload.fields([
         maxCount: 1
     }
 ]), verifyJwt, uploadVideo);
+router.post("/getById/:id", verifyJwt, getVideoById);
+router.post("/getUser/:id", verifyJwt, getUserVideos);
+
+router.get("/getAll", verifyJwt, getAllVideos);
 
 router.put("/update/:id", upload.fields([
     {
@@ -30,10 +34,5 @@ router.put("/update/:id", upload.fields([
 
 router.delete("/delete/:id", verifyJwt, deleteVideo);
 
-router.post("/getById/:id", verifyJwt, getVideoById);
-
-router.post("/getUser/:id", verifyJwt, getUserVideos)
-
-router.get("/getAll", verifyJwt, getAllVideos);
 
 export default router;
