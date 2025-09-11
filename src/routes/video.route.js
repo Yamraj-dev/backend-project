@@ -4,6 +4,7 @@ import { verifyJwt } from "../middlewares/auth.middleware.js";
 import { deleteVideo, getAllVideos, getUserVideos, getVideoById, updateVideo, uploadVideo } from "../controllers/video.controller.js";
 
 const router = Router();
+router.use(verifyJwt);
 
 //secured routes
 router.post("/upload", upload.fields([
@@ -15,11 +16,11 @@ router.post("/upload", upload.fields([
         name: "thumbnailImg",
         maxCount: 1
     }
-]), verifyJwt, uploadVideo);
-router.post("/getById/:id", verifyJwt, getVideoById);
-router.post("/getUser/:id", verifyJwt, getUserVideos);
+]), uploadVideo);
+router.post("/getById/:id", getVideoById);
+router.post("/getUser/:id", getUserVideos);
 
-router.get("/getAll", verifyJwt, getAllVideos);
+router.get("/getAll", getAllVideos);
 
 router.put("/update/:id", upload.fields([
     {
@@ -30,9 +31,9 @@ router.put("/update/:id", upload.fields([
         name: "thumbnailImg",
         maxCount: 1
     }
-]), verifyJwt, updateVideo);
+]), updateVideo);
 
-router.delete("/delete/:id", verifyJwt, deleteVideo);
+router.delete("/delete/:id", deleteVideo);
 
 
 export default router;

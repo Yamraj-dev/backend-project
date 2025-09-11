@@ -22,10 +22,19 @@ export const getUserTweets = asyncHandler(async (req, res) => {
     const { id: userId } = req.params;
 
     const userTweets = await Tweet.find({ owner: userId }).populate("owner", "username avatar").skip((page - 1) * limit).limit(Number(limit)).sort({ createdAt: -1 });
+    const total = await Tweet.countDocuments({ owner: userId });
 
     if (!userTweets.length) throw new ApiError(404, "Tweet not found");
 
-    res.status(200).json(new ApiResponse(200, userTweets, "Tweets fetched successfully"))
+    res.status(200).json(new ApiResponse(200,
+        {
+            userTweets,
+            pagination: {
+                total,
+                page: Number(page),
+                pages: Math.ceil(total / limit)
+            }
+        }, "Tweets fetched successfully"))
 });
 
 export const updateTweet = asyncHandler(async (req, res) => {
