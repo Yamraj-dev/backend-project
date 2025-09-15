@@ -1,5 +1,4 @@
 import asyncHandler from "../utils/asyncHandler.js";
-import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { Like } from "../models/like.model.js";
 
@@ -28,8 +27,6 @@ export const likeTweet = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, like, "Liked the tweet"));
 });
 
-
-
 export const likeComment = asyncHandler(async (req, res) => {
     const { id: commentId } = req.params;
 
@@ -55,7 +52,6 @@ export const likeComment = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, like, "Liked the comment"));
 });
 
-
 export const likeVideo = asyncHandler(async (req, res) => {
     const { id: videoId } = req.params;
 
@@ -80,7 +76,6 @@ export const likeVideo = asyncHandler(async (req, res) => {
         .status(200)
         .json(new ApiResponse(200, like, "Liked the video"));
 });
-
 
 export const likedByUser = asyncHandler(async (req, res) => {
     const { id: userId } = req.params;

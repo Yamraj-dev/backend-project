@@ -19,11 +19,13 @@ app.use(cookieParser());
 
 import userRouter from "./routes/user.routes.js";
 import videoRouter from "./routes/video.route.js";
+import likeRoute from "./routes/like.routes.js";
 
 // routes declaration
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/videos", videoRouter);
+app.use("/api/v1/likes", likeRoute)
 
 // health check route
 app.get("/api/v1/healthCheck", (req, res) => {
