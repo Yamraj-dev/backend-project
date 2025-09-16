@@ -9,7 +9,7 @@ router.use(verifyJwt);
 
 router.post("/:id", addComment);
 
-router.get("/video/:id", getVideoComments);
+router.get("/:id", getVideoComments);
 
 router.put("/:id", updateComment);
 
