@@ -39,7 +39,7 @@ router.get(
 );
 
 router.patch(
-    "/videos/:id",
+    "/:id",
     upload.fields([{ name: "videoFile", maxCount: 1 }, { name: "thumbnailImg", maxCount: 1 }]),
     updateVideo
 );
