@@ -18,7 +18,7 @@ router.use(verifyJwt);
 //secure routes
 
 router.post(
-    "/videos",
+    "/upload",
     upload.fields([{ name: "videoFile", maxCount: 1 }, { name: "thumbnailImg", maxCount: 1 }]),
     uploadVideo
 );
@@ -34,7 +34,7 @@ router.get(
 );
 
 router.get(
-    "/videos/:Id",
+    "/user-videos/:Id",
     getUserVideos
 );
 
