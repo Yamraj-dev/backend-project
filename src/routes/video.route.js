@@ -24,17 +24,17 @@ router.post(
 );
 
 router.get(
-    "/videos",
+    "/",
     getAllVideos
 );
 
 router.get(
-    "/videos/:id",
+    "/:id",
     getVideoById
 );
 
 router.get(
-    "/user-videos/:Id",
+    "/user/:Id",
     getUserVideos
 );
 
@@ -45,7 +45,7 @@ router.patch(
 );
 
 router.delete(
-    "/videos/:id",
+    "/:id",
     deleteVideo
 );
 
