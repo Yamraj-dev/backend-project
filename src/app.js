@@ -20,9 +20,10 @@ app.use(cookieParser());
 import userRoute from "./routes/user.routes.js";
 import videoRoute from "./routes/video.route.js";
 import likeRoute from "./routes/like.routes.js";
-import tweetRoute from "./routes/tweet.routes.js"
-import subscriptionRoute from "./routes/subscription.routes.js"
-
+import tweetRoute from "./routes/tweet.routes.js";
+import subscriptionRoute from "./routes/subscription.routes.js";
+import playlistRoute from "./routes/playlist.routes.js";
+import commentRoute from "./routes/comment.route.js";
 
 // routes declaration
 
@@ -30,7 +31,9 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/videos", videoRoute);
 app.use("/api/v1/likes", likeRoute);
 app.use("/api/v1/tweets", tweetRoute);
-app.use('/api/v1/subscriptions', subscriptionRoute)
+app.use('/api/v1/subscriptions', subscriptionRoute);
+app.use("/api/v1/playlists", playlistRoute);
+app.use("/api/v1/comments", commentRoute);
 
 // health check route
 app.get("/api/v1/healthCheck", (req, res) => {
